@@ -1,0 +1,6 @@
+Shared navigation:
+DIPLODOCUSS | Tentang | Menu | Persinggahan | Cerita | Pesan
+
+Order link currently points to the existing short link from the brand's Instagram profile: https://bit.ly/kopsus_diplodocuss
+
+WhatsApp link is intentionally left as a placeholder (#whatsapp) because no destination number was provided.
