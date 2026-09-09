@@ -186,7 +186,6 @@
       line-height:1.48;
       color:#efefeb;
     }
-
     .community-card{
       text-decoration:none;
     }
@@ -533,10 +532,16 @@
       emptyState.hidden = true;
 
       carousel.innerHTML = communityStories.map((story, index) => `
-        <a class="community-card" href="cerita/${encodeURIComponent(story.slug)}.html" aria-label="Baca cerita ${escapeHtml(story.title)}">
+        <a
+          class="community-card"
+          href="cerita/${encodeURIComponent(story.slug)}.html"
+          aria-label="Baca cerita ${escapeHtml(story.title)}"
+        >
           <img src="${story.image_url}" alt="${escapeHtml(story.title)}">
           <div class="community-card-copy">
-            <div class="editorial-meta">Jeda menurut kamu · ${String(index + 1).padStart(2,"0")}</div>
+            <div class="editorial-meta">
+              Jeda menurut kamu · ${String(index + 1).padStart(2,"0")}
+            </div>
             <h3 class="community-card-title">${escapeHtml(story.title)}</h3>
             <p class="community-card-quote">“${escapeHtml(story.story_text)}”</p>
             <span class="community-card-credit">— ${escapeHtml(story.instagram || story.author_name)}</span>
@@ -552,17 +557,21 @@
         .from("stories")
         .select("id, title, author_name, instagram, story_text, image_path, slug, published_at")
         .eq("status", "approved")
-        .order("published_at", { ascending: false });
+        .order("published_at", { ascending: false, nullsFirst: false });
 
       if(error){
         console.error("Gagal mengambil cerita dari Supabase:", error);
         communityStories = [];
+        emptyState.querySelector("p").textContent =
+          "Cerita belum bisa dimuat. Cek console browser untuk detail error.";
         renderCommunityStories();
         return;
       }
 
-      if(!data || !data.length){
+      if(!data || data.length === 0){
         communityStories = [];
+        emptyState.querySelector("p").textContent =
+          "Belum ada cerita yang sudah dipilih. Nanti cerita-cerita pilihan dari teman-teman akan muncul di sini.";
         renderCommunityStories();
         return;
       }
@@ -571,16 +580,25 @@
 
       for(const story of data){
         if(!story.image_path){
+          console.warn("Story tidak punya image_path:", story.id);
           continue;
         }
 
-        const { data: signedImage, error: signedImageError } = await supabaseClient
-          .storage
-          .from("story-images")
-          .createSignedUrl(story.image_path, 60 * 60 * 24);
+        const { data: signedImage, error: signedImageError } =
+          await supabaseClient
+            .storage
+            .from("story-images")
+            .createSignedUrl(story.image_path, 60 * 60 * 24 * 7);
 
         if(signedImageError || !signedImage?.signedUrl){
-          console.warn("Foto cerita gagal dibuatkan signed URL:", story.id, signedImageError);
+          console.error(
+            "Foto story gagal dibuatkan signed URL.",
+            {
+              storyId: story.id,
+              imagePath: story.image_path,
+              error: signedImageError
+            }
+          );
           continue;
         }
 
@@ -591,6 +609,12 @@
       }
 
       communityStories = storiesWithImages;
+
+      if(!communityStories.length){
+        emptyState.querySelector("p").textContent =
+          "Cerita sudah approved, tapi foto belum bisa ditampilkan. Cek policy Storage untuk bucket story-images.";
+      }
+
       renderCommunityStories();
     }
 
@@ -623,8 +647,16 @@
       });
     }
 
-    prevButton.addEventListener("click", () => scrollStories(-1));
-    nextButton.addEventListener("click", () => scrollStories(1));
+    prevButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      scrollStories(-1);
+    });
+
+    nextButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      scrollStories(1);
+    });
+
     carousel.addEventListener("scroll", updateStatus, {passive:true});
 
     loadCommunityStories();
