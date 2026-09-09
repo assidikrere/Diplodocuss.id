@@ -1,689 +1,227 @@
 <!doctype html>
 <html lang="id">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description"
-    content="Diplodocuss — Tempat Persinggahan. Kopi dan teh untuk nemenin hari yang sedang berjalan.">
-  <title>Diplodocuss — Tempat Persinggahan</title>
+  <meta name="description" content="Diplodocuss — Teman Jeda. Kopi dan teh untuk nemenin hari yang sedang berjalan.">
+  <title>Diplodocuss — Teman Jeda</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    [hidden]{display:none !important}
+    .hero-copy .kicker{opacity:.82}
+    .section-intro{display:flex;justify-content:space-between;align-items:end;gap:36px}
+    .section-intro p{max-width:430px;margin:0;color:#4f4f4a;font-size:17px}
+    .moment-note{font-size:15px;color:#5b5b56;max-width:460px;margin-top:18px}
+    .photo-caption{font-size:12px;color:#6d6d68;margin-top:9px}
+    .world-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:34px}
+    .world-card{overflow:hidden;border-radius:20px;background:#eee}
+    .world-card img{width:100%;height:100%;object-fit:cover}
+    .world-card.tall{min-height:520px}
+    .world-side{display:grid;grid-template-rows:1fr 1fr;gap:16px}
+    .world-side .world-card{min-height:252px}
+    .quiet-line{font-size:clamp(30px,4vw,54px);letter-spacing:-.04em;line-height:1.02;max-width:760px}
+    @media(max-width:900px){
+      .section-intro,.world-grid{grid-template-columns:1fr;display:grid;gap:24px}
+      .world-side{grid-template-columns:1fr 1fr;grid-template-rows:none}
+      .world-card.tall{min-height:360px}
+      .world-side .world-card{min-height:210px}
+    }
+    @media(max-width:620px){
+      .world-side{grid-template-columns:1fr;grid-template-rows:220px 220px}
+    }
+  </style>
 </head>
-
 <body>
-
   <header class="site-header">
     <div class="container nav">
-
       <a class="logo" href="index.html">DIPLODOCUSS</a>
-
-      <button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">
-        ☰
-      </button>
-
+      <button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button>
       <nav class="nav-links">
         <a href="tentang.html">Tentang</a>
         <a href="menu.html">Menu</a>
-        <a href="persinggahan.html">Persinggahan</a>
+        <a href="hadir.html" data-feature="hadir">Hadir</a>
         <a href="cerita.html">Cerita</a>
-
-        <a
-          class="nav-cta"
-          href="https://r.grab.com/o/NV3MZvei"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Pesan
-        </a>
+        <a class="nav-cta" href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Pesan</a>
       </nav>
-
     </div>
   </header>
 
-
   <main>
-
-    <!-- HERO -->
     <section class="hero container">
       <div class="hero-media">
-
-        <img
-          src="assets/archival-2018.png"
-          alt="Momen lama Diplodocuss dari arsip 2018"
-        >
-
+        <img src="assets/2018-lapangan-pemda.jpg" alt="Arsip Diplodocuss di Lapangan Pemda Muntilan">
         <div class="hero-overlay"></div>
-
         <div class="hero-copy">
-
-          <div class="kicker">
-            Dari Magelang · 2018
-          </div>
-
-          <h1>
-            Tempat Persinggahan.
-          </h1>
-
-          <p>
-            Kopi dan teh untuk nemenin hari yang sedang berjalan.
-          </p>
-
+          <div class="kicker">Dari Magelang · 2018 → 2026</div>
+          <h1>Teman Jeda.</h1>
+          <p>Kopi dan teh untuk nemenin hari yang sedang berjalan.</p>
           <div class="actions">
-
-            <a
-              class="btn btn-light"
-              href="https://r.grab.com/o/NV3MZvei"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Pesan di Grab →
-            </a>
-
-            <a
-              class="btn btn-outline-light"
-              href="tentang.html"
-            >
-              Kenal Diplo →
-            </a>
-
+            <a class="btn btn-light" href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Pesan di Grab →</a>
+            <a class="btn btn-outline-light" href="tentang.html">Kenal Diplo →</a>
           </div>
-
         </div>
       </div>
     </section>
 
-
-    <!-- AFTER WORK -->
     <section class="section container">
       <div class="split">
-
         <div class="image-card">
-          <img
-            src="assets/kopi-aren.png"
-            alt="Kopi Aren Diplodocuss"
-          >
+          <img src="assets/now-working.jpg" alt="Diplodocuss menemani waktu kerja">
         </div>
-
         <div class="copy-block">
-
-          <div class="kicker">
-            Selepas kerja
-          </div>
-
-          <h2>
-            Masih ada yang harus dikerjain?
-          </h2>
-
-          <p>
-            Yaudah, minum dulu. Kadang kopi dibutuhkan bukan setelah semuanya
-            selesai, tapi supaya semuanya bisa dilanjutkan.
-          </p>
-
-          <a class="small-link" href="menu.html">
-            Lihat menu →
-          </a>
-
+          <div class="kicker">Selepas kerja</div>
+          <h2>Masih ada yang harus dikerjain?</h2>
+          <p>Yaudah, minum dulu. Kadang kopi dibutuhkan bukan setelah semuanya selesai, tapi supaya semuanya bisa dilanjutkan.</p>
+          <a class="small-link" href="menu.html">Lihat menu →</a>
         </div>
-
       </div>
     </section>
 
-
-    <!-- FRIENDS -->
     <section class="section container">
       <div class="split reverse">
-
         <div class="copy-block">
-
-          <div class="kicker">
-            Kalau teman datang
-          </div>
-
-          <h2>
-            Teman datang?
-          </h2>
-
-          <p>
-            Nggak perlu banyak persiapan. Minuman sudah ada, obrolannya tinggal jalan.
-          </p>
-
-          <a class="small-link" href="persinggahan.html">
-            Lihat persinggahan →
-          </a>
-
+          <div class="kicker">Kalau teman datang</div>
+          <h2>Teman datang?</h2>
+          <p>Buka botol. Tuang. Duduk. Obrolannya tinggal jalan.</p>
+          <a class="small-link" href="cerita.html">Lihat cerita →</a>
         </div>
-
         <div class="image-card">
-          <img
-            src="assets/founder-contact-sheet.png"
-            alt="Dokumentasi orang dan momen Diplodocuss"
-          >
+          <img src="assets/now-friends.jpg" alt="Tiga teman minum Diplodocuss di rumah">
         </div>
-
       </div>
     </section>
 
-
-    <!-- PRODUCTS -->
     <section class="section container">
-
-      <div class="copy-block">
-
-        <div class="kicker">
-          Minuman
-        </div>
-
-        <h2>
-          Mau yang mana?
-        </h2>
-
-        <p>
-          Mau kopi atau teh, tinggal pilih sesuai hari.
-        </p>
-
-      </div>
-
-
-      <div
-        class="product-scroll"
-        style="margin-top:32px"
-      >
-
-        <article class="product">
-
-          <img
-            src="assets/kopi-aren.png"
-            alt="Kopi Aren"
-          >
-
-          <div class="product-body">
-
-            <h3>
-              Kopi Aren
-            </h3>
-
-            <div class="notes">
-              Nutty · Creamy · Dark Chocolate
-            </div>
-
-            <div class="price">
-              Rp18.000
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="product">
-
-          <img
-            src="assets/kopi-amer.jpeg"
-            alt="Kopi Amer"
-          >
-
-          <div class="product-body">
-
-            <h3>
-              Kopi Amer
-            </h3>
-
-            <div class="notes">
-              Nutty · Dark Chocolate · Clean
-            </div>
-
-            <div class="price">
-              Rp15.000
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="product">
-
-          <img
-            src="assets/teh-bloom.jpeg"
-            alt="Teh Bloom"
-          >
-
-          <div class="product-body">
-
-            <h3>
-              Teh Bloom
-            </h3>
-
-            <div class="notes">
-              Light Tea · Floral · Caramel · Creamy
-            </div>
-
-            <div class="price">
-              Rp18.000
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="product">
-
-          <img
-            src="assets/teh-earl.jpeg"
-            alt="Teh Earl"
-          >
-
-          <div class="product-body">
-
-            <h3>
-              Teh Earl
-            </h3>
-
-            <div class="notes">
-              Light Tea · Bergamot · Rose Flower
-            </div>
-
-            <div class="price">
-              Rp15.000
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="product">
-
-          <img
-            src="assets/espro.jpeg"
-            alt="Kopi Espro"
-          >
-
-          <div class="product-body">
-
-            <h3>
-              Espro
-            </h3>
-
-            <div class="notes">
-              Bold · Chocolate
-            </div>
-
-            <div class="price">
-              Rp15.000
-            </div>
-
-          </div>
-
-        </article>
-
-      </div>
-
-
-      <div style="margin-top:18px">
-
-        <a class="small-link" href="menu.html">
-          Lihat semua menu →
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- STORY -->
-    <section class="story-band">
-
-      <div class="container">
-
-        <div class="archival">
-
-          <img
-            src="assets/archival-2018.png"
-            alt="Arsip Diplodocuss 2018"
-          >
-
-          <div class="archival-meta">
-
-            <div>
-
-              <div class="year">
-                2018 → 2026
-              </div>
-
-              <h2>
-                Sempat berhenti.
-              </h2>
-
-            </div>
-
-            <div class="mini-annotation">
-              Lumayan lama juga.
-            </div>
-
-          </div>
-
-
-          <p
-            style="max-width:700px;font-size:18px;color:#454541;margin:18px 0 0"
-          >
-            Diplodocuss mulai di Magelang saat pendirinya masih kelas 2 SMA.
-            Sempat jalan, lalu berhenti. Delapan tahun kemudian, mulai lagi.
-          </p>
-
-
-          <div style="margin-top:22px">
-
-            <a class="small-link" href="tentang.html">
-              Cerita lengkap →
-            </a>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- WORLD / MOMENTS -->
-    <section class="section container">
-
-      <div class="copy-block">
-
-        <div class="kicker">
-          Dunia Diplo
-        </div>
-
-        <h2>
-          Mampir di mana aja.
-        </h2>
-
-        <p>
-          Di kos. Di rumah. Di kantor. Di perjalanan. Bareng teman. Atau sendirian.
-        </p>
-
-      </div>
-
-
-      <div
-        class="mosaic"
-        style="margin-top:34px"
-      >
-
-        <img
-          class="wide"
-          src="assets/founder-contact-sheet.png"
-          alt="People and moments"
-        >
-
-        <img
-          src="assets/kopi-amer.jpeg"
-          alt="Diplodocuss di keseharian"
-        >
-
-        <img
-          src="assets/espro.jpeg"
-          alt="Diplodocuss di perjalanan"
-        >
-
-      </div>
-
-
-      <div style="margin-top:20px">
-
-        <a class="small-link" href="persinggahan.html">
-          Lihat persinggahan →
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- QUALITY -->
-    <section class="section container">
-
-      <div class="quality">
-
+      <div class="section-intro">
         <div class="copy-block">
-
-          <div class="kicker">
-            Kualitas
-          </div>
-
-          <h2>
-            Yang masuk botol, kami pilih baik-baik.
-          </h2>
-
-          <p>
-            Kami cukup cerewet soal rasa. Bukan supaya minumnya ribet,
-            tapi supaya saat dibuka, rasanya tetap enak.
-          </p>
-
+          <div class="kicker">Minuman</div>
+          <h2>Kalau hari ini mau kopi, tinggal pilih sesuai mood.</h2>
         </div>
-
-
-        <div class="quality-grid">
-
-          <div class="quality-item">
-
-            <span>
-              01 · Sourcing
-            </span>
-
-            <h3>
-              Dipilih dengan serius.
-            </h3>
-
-            <p>
-              Bahan yang digunakan tetap punya standar.
-            </p>
-
-          </div>
-
-
-          <div class="quality-item">
-
-            <span>
-              02 · Rasa
-            </span>
-
-            <h3>
-              Dijaga konsistensinya.
-            </h3>
-
-            <p>
-              Yang penting enak lagi saat diminum besok.
-            </p>
-
-          </div>
-
-
-          <div class="quality-item">
-
-            <span>
-              03 · Minum
-            </span>
-
-            <h3>
-              Tetap gampang.
-            </h3>
-
-            <p>
-              Nggak perlu ritual panjang untuk menikmati.
-            </p>
-
-          </div>
-
-        </div>
-
+        <p>Kopi dan teh dalam botol, untuk berbagai hari dan suasana. Pilih yang paling cocok buat hari ini.</p>
       </div>
 
+      <div class="product-scroll" style="margin-top:32px">
+        <article class="product">
+          <img src="assets/kopi-aren.png" alt="Kopi Aren">
+          <div class="product-body"><h3>Kopi Aren</h3><div class="notes">Nutty · Creamy · Dark Chocolate</div><div class="price">Rp18.000</div></div>
+        </article>
+        <article class="product">
+          <img src="assets/kopi-amer.jpeg" alt="Kopi Amer">
+          <div class="product-body"><h3>Kopi Amer</h3><div class="notes">Nutty · Dark Chocolate · Clean</div><div class="price">Rp15.000</div></div>
+        </article>
+        <article class="product">
+          <img src="assets/teh-bloom.jpeg" alt="Teh Bloom">
+          <div class="product-body"><h3>Teh Bloom</h3><div class="notes">Light Tea · Floral · Caramel · Creamy</div><div class="price">Rp18.000</div></div>
+        </article>
+        <article class="product">
+          <img src="assets/teh-earl.jpeg" alt="Teh Earl">
+          <div class="product-body"><h3>Teh Earl</h3><div class="notes">Light Tea · Bergamot · Rose Flower</div><div class="price">Rp15.000</div></div>
+        </article>
+        <article class="product">
+          <img src="assets/espro.jpeg" alt="Kopi Espro">
+          <div class="product-body"><h3>Espro</h3><div class="notes">Bold · Chocolate</div><div class="price">Rp15.000</div></div>
+        </article>
+      </div>
+      <div style="margin-top:18px"><a class="small-link" href="menu.html">Lihat semua menu →</a></div>
     </section>
 
+    <section class="story-band">
+      <div class="container">
+        <div class="archival">
+          <img src="assets/2018-booth-worker.jpg" alt="Founder Diplodocuss berjualan pada 2018">
+          <div class="archival-meta">
+            <div>
+              <div class="year">2018 → 2026</div>
+              <h2>Sempat berhenti.</h2>
+            </div>
+            <div class="mini-annotation">Lumayan lama juga.</div>
+          </div>
+          <p style="max-width:700px;font-size:18px;color:#454541;margin:18px 0 0">Diplodocuss mulai di Magelang saat pendirinya masih kelas 2 SMA. Sempat jalan, lalu berhenti. Delapan tahun kemudian, mulai lagi.</p>
+          <div style="margin-top:22px"><a class="small-link" href="tentang.html">Cerita lengkap →</a></div>
+        </div>
+      </div>
+    </section>
 
-    <!-- FINAL CTA -->
     <section class="section container">
-
-      <div class="cta-panel">
-
-        <img
-          src="assets/espro.jpeg"
-          alt="Diplodocuss di meja"
-        >
-
-        <div class="content">
-
-          <div class="kicker">
-            Pintu keluar
-          </div>
-
-          <h2>
-            Mau mampir?
-          </h2>
-
-          <p>
-            Minum dulu. Habis itu lanjut lagi.
-          </p>
-
-
-          <div class="actions">
-
-            <a
-              class="btn btn-light"
-              href="https://r.grab.com/o/NV3MZvei"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Pesan di Grab →
-            </a>
-
-
-            <a
-              class="btn btn-outline-light"
-              href="https://wa.me/6281329024085?text=Halo%20Diplo%2C%20mau%20pesan."
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Pesan via WhatsApp
-            </a>
-
-          </div>
-
-        </div>
-
+      <div class="copy-block">
+        <div class="kicker">Hadir di sela-sela hari</div>
+        <h2>Di kantor. Di kos. Di rumah. Di perjalanan.</h2>
+        <p>Bareng teman atau sendirian. Diplodocuss nggak harus jadi tujuan. Cukup hadir ketika dibutuhkan.</p>
       </div>
 
+      <div class="world-grid">
+        <div class="world-card tall"><img src="assets/door-friends.jpg" alt="Teman datang membawa Diplodocuss"></div>
+        <div class="world-side">
+          <div class="world-card"><img src="assets/drive.jpg" alt="Diplodocuss dalam perjalanan"></div>
+          <div class="world-card"><img src="assets/2018-group.jpg" alt="Teman-teman bersama Diplodocuss pada masa awal"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:22px">
+        <p class="quiet-line">Brand world-nya akan tumbuh pelan-pelan, dari momen yang benar-benar terjadi.</p>
+        <a class="small-link" href="hadir.html" data-feature="hadir">Lihat dunia Diplo →</a>
+      </div>
     </section>
 
+    <section class="section container">
+      <div class="quality">
+        <div class="copy-block">
+          <div class="kicker">Kualitas</div>
+          <h2>Serius bikin minumannya. Kamu nggak perlu ribet.</h2>
+          <p>Kami cukup cerewet soal rasa. Bukan supaya minumnya rumit, tapi supaya saat dibuka, rasanya tetap enak.</p>
+        </div>
+        <div class="quality-grid">
+          <div class="quality-item"><span>01 · Sourcing</span><h3>Dipilih dengan serius.</h3><p>Bahan yang digunakan tetap punya standar.</p></div>
+          <div class="quality-item"><span>02 · Rasa</span><h3>Dijaga konsistensinya.</h3><p>Yang penting enak lagi saat diminum besok.</p></div>
+          <div class="quality-item"><span>03 · Minum</span><h3>Tetap gampang.</h3><p>Nggak perlu ritual panjang untuk menikmati.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container">
+      <div class="cta-panel">
+        <img src="assets/2018-night-booth.jpg" alt="Diplodocuss di malam hari pada masa awal">
+        <div class="content">
+          <div class="kicker">Teman jeda</div>
+          <h2>Minum dulu.</h2>
+          <p>Habis itu lanjut lagi.</p>
+          <div class="actions">
+            <a class="btn btn-light" href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Pesan di Grab →</a>
+            <a class="btn btn-outline-light" href="https://wa.me/6281329024085?text=Halo%20Diplo%2C%20mau%20pesan." target="_blank" rel="noopener noreferrer">Pesan via WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-
-  <!-- FOOTER -->
   <footer class="site-footer">
-
     <div class="container">
-
       <div class="footer-top">
-
         <div>
-
-          <div class="footer-brand">
-            DIPLODOCUSS
-          </div>
-
-          <div class="footer-note">
-            Tempat Persinggahan. Kopi, teh, dan hal-hal kecil yang menemani hari.
-          </div>
-
+          <div class="footer-brand">DIPLODOCUSS</div>
+          <div class="footer-note">Teman jeda. Kopi, teh, dan hal-hal kecil yang menemani hari.</div>
         </div>
-
-
         <div class="footer-col">
-
-          <h4>
-            Kenal
-          </h4>
-
-          <a href="tentang.html">
-            Tentang
-          </a>
-
-          <a href="menu.html">
-            Menu
-          </a>
-
-          <a href="persinggahan.html">
-            Persinggahan
-          </a>
-
-          <a href="cerita.html">
-            Cerita
-          </a>
-
+          <h4>Kenal</h4>
+          <a href="tentang.html">Tentang</a>
+          <a href="menu.html">Menu</a>
+          <a href="hadir.html" data-feature="hadir">Hadir</a>
+          <a href="cerita.html">Cerita</a>
         </div>
-
-
         <div class="footer-col">
-
-          <h4>
-            Hubungi
-          </h4>
-
-
-          <a
-            href="https://r.grab.com/o/NV3MZvei"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Grab
-          </a>
-
-
-          <a
-            href="https://wa.me/6281329024085?text=Halo%20Diplo%2C%20mau%20pesan."
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            WhatsApp
-          </a>
-
-
-          <a
-            href="https://www.instagram.com/diplodocuss.id/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Instagram
-          </a>
-
+          <h4>Hubungi</h4>
+          <a href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Grab</a>
+          <a href="https://wa.me/6281329024085?text=Halo%20Diplo%2C%20mau%20pesan." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://www.instagram.com/diplodocuss.id/" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
-
       </div>
-
-
       <div class="footer-bottom">
-
-        <span>
-          © <span data-year></span> Diplodocuss
-        </span>
-
-        <span>
-          Real life, well framed.
-        </span>
-
+        <span>© <span data-year></span> Diplodocuss</span>
+        <span>Real life, well framed.</span>
       </div>
-
     </div>
-
   </footer>
 
-
   <script src="js/main.js"></script>
-
 </body>
-
 </html>
