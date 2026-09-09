@@ -186,6 +186,15 @@
       line-height:1.48;
       color:#efefeb;
     }
+
+    .community-card{
+      text-decoration:none;
+    }
+    .community-card:focus-visible{
+      outline:2px solid #171716;
+      outline-offset:3px;
+    }
+
     .community-card-credit{
       display:block;
       margin-top:15px;
@@ -411,7 +420,7 @@
           <div class="story-carousel" id="communityStories" aria-label="Cerita dari kamu"></div>
 
           <div class="community-empty" id="communityEmpty">
-            <p>Belum ada cerita di sini. Nanti cerita-cerita pilihan dari Instagram akan muncul di sini.</p>
+            <p>Belum ada cerita di sini. Nanti cerita-cerita pilihan dari teman-teman akan muncul di sini.</p>
           </div>
 
           <div class="carousel-controls" id="carouselControls" hidden>
@@ -479,22 +488,17 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/main.js"></script>
 
   <script>
-    /*
-      DATA SOURCE
-      Tambahkan cerita nyata di sini setelah ada submission yang lo pilih.
+    const SUPABASE_URL = "https://wnyhxogclzivstacasqi.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_uugjdsknBFrHcZq0xdA33A_c9miRmfJ";
 
-      Contoh:
-      {
-        title: "Jeda setelah meeting.",
-        quote: "Kadang yang gue butuh cuma duduk 10 menit...",
-        credit: "@username",
-        image: "assets/nama-foto-customer.jpg"
-      }
-    */
-    const communityStories = [];
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
 
     const carousel = document.getElementById("communityStories");
     const emptyState = document.getElementById("communityEmpty");
@@ -502,6 +506,17 @@
     const status = document.getElementById("carouselStatus");
     const prevButton = controls.querySelector(".prev");
     const nextButton = controls.querySelector(".next");
+
+    let communityStories = [];
+
+    function escapeHtml(value = ""){
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
     function renderCommunityStories(){
       if(!communityStories.length){
@@ -518,18 +533,65 @@
       emptyState.hidden = true;
 
       carousel.innerHTML = communityStories.map((story, index) => `
-        <article class="community-card">
-          <img src="${story.image}" alt="${story.title}">
+        <a class="community-card" href="cerita/${encodeURIComponent(story.slug)}.html" aria-label="Baca cerita ${escapeHtml(story.title)}">
+          <img src="${story.image_url}" alt="${escapeHtml(story.title)}">
           <div class="community-card-copy">
             <div class="editorial-meta">Jeda menurut kamu · ${String(index + 1).padStart(2,"0")}</div>
-            <h3 class="community-card-title">${story.title}</h3>
-            <p class="community-card-quote">“${story.quote}”</p>
-            <cite class="community-card-credit">— ${story.credit}</cite>
+            <h3 class="community-card-title">${escapeHtml(story.title)}</h3>
+            <p class="community-card-quote">“${escapeHtml(story.story_text)}”</p>
+            <span class="community-card-credit">— ${escapeHtml(story.instagram || story.author_name)}</span>
           </div>
-        </article>
+        </a>
       `).join("");
 
       updateStatus();
+    }
+
+    async function loadCommunityStories(){
+      const { data, error } = await supabaseClient
+        .from("stories")
+        .select("id, title, author_name, instagram, story_text, image_path, slug, published_at")
+        .eq("status", "approved")
+        .order("published_at", { ascending: false });
+
+      if(error){
+        console.error("Gagal mengambil cerita dari Supabase:", error);
+        communityStories = [];
+        renderCommunityStories();
+        return;
+      }
+
+      if(!data || !data.length){
+        communityStories = [];
+        renderCommunityStories();
+        return;
+      }
+
+      const storiesWithImages = [];
+
+      for(const story of data){
+        if(!story.image_path){
+          continue;
+        }
+
+        const { data: signedImage, error: signedImageError } = await supabaseClient
+          .storage
+          .from("story-images")
+          .createSignedUrl(story.image_path, 60 * 60 * 24);
+
+        if(signedImageError || !signedImage?.signedUrl){
+          console.warn("Foto cerita gagal dibuatkan signed URL:", story.id, signedImageError);
+          continue;
+        }
+
+        storiesWithImages.push({
+          ...story,
+          image_url: signedImage.signedUrl
+        });
+      }
+
+      communityStories = storiesWithImages;
+      renderCommunityStories();
     }
 
     function updateStatus(){
@@ -537,12 +599,15 @@
       if(!card){
         return;
       }
+
       const step = card.getBoundingClientRect().width + 12;
       const current = Math.min(
         communityStories.length,
         Math.max(1, Math.round(carousel.scrollLeft / step) + 1)
       );
-      status.textContent = `${String(current).padStart(2,"0")} / ${String(communityStories.length).padStart(2,"0")}`;
+
+      status.textContent =
+        `${String(current).padStart(2,"0")} / ${String(communityStories.length).padStart(2,"0")}`;
     }
 
     function scrollStories(direction){
@@ -550,15 +615,19 @@
       if(!card){
         return;
       }
+
       const step = card.getBoundingClientRect().width + 12;
-      carousel.scrollBy({left: direction * step, behavior:"smooth"});
+      carousel.scrollBy({
+        left: direction * step,
+        behavior:"smooth"
+      });
     }
 
     prevButton.addEventListener("click", () => scrollStories(-1));
     nextButton.addEventListener("click", () => scrollStories(1));
     carousel.addEventListener("scroll", updateStatus, {passive:true});
 
-    renderCommunityStories();
+    loadCommunityStories();
   </script>
 </body>
 </html>
