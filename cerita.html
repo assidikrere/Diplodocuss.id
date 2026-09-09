@@ -1,8 +1,507 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cerita — Diplodocuss</title><link rel="stylesheet" href="css/style.css"></head><body>
-<header class="site-header"><div class="container nav"><a class="logo" href="index.html">DIPLODOCUSS</a><button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button><nav class="nav-links"><a href="tentang.html">Tentang</a><a href="menu.html">Menu</a><a href="hadir.html" data-feature="hadir">Hadir</a><a href="cerita.html">Cerita</a><a class="nav-cta" href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Pesan</a></nav></div></header>
-<main class="container"><section class="page-hero"><div class="kicker">Cerita</div><h1>Cerita dari sini.</h1><p>Tentang minuman, tempat kami mampir, orang-orang yang ikut minum, dan hal-hal kecil yang terjadi di antaranya.</p></section>
-<section class="section"><div class="story-grid"><article class="big article"><img src="assets/archival-2018.png" alt="Diplodocuss 2018"><div class="tag">Diplodocuss</div><h3>Kenapa Diplodocuss mulai lagi?</h3><p>Delapan tahun ternyata cukup lama untuk membuat banyak hal berubah. Termasuk cara kami bikin dan menjual kopi.</p><a class="small-link" href="tentang.html">Baca cerita →</a></article><article class="small article"><img src="assets/founder-contact-sheet.png" alt="Orang-orang di balik Diplo"><div class="tag">Mampir</div><h3>Katanya cuma sebentar.</h3><p>Teman datang, minuman ikut datang.</p><a class="small-link" href="hadir.html" data-feature="hadir">Lihat →</a></article></div></section>
-<section class="section"><div class="kicker">Catatan</div><div class="journal" style="margin-top:26px"><article class="article"><img src="assets/kopi-aren.png" alt="Kopi Aren"><div class="tag">Minum</div><h3>Kenapa ada teh?</h3><p>Karena tidak semua orang setiap hari ingin minum kopi.</p></article><article class="article"><img src="assets/espro.jpeg" alt="Espro"><div class="tag">Diplo</div><h3>Yang masuk botol, dipilih baik-baik.</h3><p>Sourcing tetap serius, cara ngomongnya nggak perlu.</p></article><article class="article"><img src="assets/kopi-amer.jpeg" alt="Kopi Amer"><div class="tag">Catatan</div><h3>V60 jangan tertinggal.</h3><p>Kalau diajak pergi jauh, biasanya ada saja yang dibawa sekalian.</p></article></div></section>
-<section class="section"><div class="quality"><div class="copy-block"><div class="kicker">Orang-orang yang ikut mampir</div><h2>Kalian juga boleh cerita.</h2><p>Kirim foto, cerita, atau momen kecil bersama Diplodocuss. Nanti kami simpan di sini.</p><div class="mini-annotation">tag @diplodocuss.coffee</div></div></div></section>
-<section class="section"><div class="cta-panel"><img src="assets/teh-earl.jpeg" alt="Teh Earl"><div class="content"><div class="kicker">Segitu dulu.</div><h2>Besok mungkin ada cerita baru.</h2><p>Atau minum dulu hari ini.</p><a class="btn btn-light" href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Pesan di Grab →</a></div></div></section>
-</main><footer class="site-footer"><div class="container"><div class="footer-top"><div><div class="footer-brand">DIPLODOCUSS</div><div class="footer-note">Teman jeda. Kopi, teh, dan hal-hal kecil yang menemani hari.</div></div><div class="footer-col"><h4>Kenal</h4><a href="tentang.html">Tentang</a><a href="menu.html">Menu</a><a href="hadir.html" data-feature="hadir">Hadir</a><a href="cerita.html">Cerita</a></div><div class="footer-col"><h4>Hubungi</h4><a href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Grab</a><a href="https://wa.me/6281329024085?text=Halo%20Diplo%2C%20mau%20pesan." target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://www.instagram.com/diplodocuss.id/" target="_blank" rel="noopener noreferrer">Instagram</a></div></div><div class="footer-bottom"><span>© <span data-year></span> Diplodocuss</span><span>Real life, well framed.</span></div></div></footer><script src="js/main.js"></script></body></html>
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Cerita Diplodocuss — editorial tentang minuman, keseharian, orang, dan hal-hal kecil di antaranya.">
+  <title>Cerita — Diplodocuss</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    [hidden]{display:none !important}
+
+    .editorial-hero{
+      padding:92px 0 48px;
+    }
+    .editorial-hero-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:48px;
+      align-items:end;
+    }
+    .editorial-hero h1{
+      max-width:620px;
+      margin:14px 0 18px;
+    }
+    .editorial-hero p{
+      max-width:560px;
+      font-size:18px;
+      color:#4f4f4a;
+      margin:0;
+    }
+    .editorial-cover{
+      overflow:hidden;
+      border-radius:20px;
+      min-height:320px;
+      background:#eee;
+    }
+    .editorial-cover img{
+      width:100%;
+      height:100%;
+      min-height:320px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .story-filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:18px 0 44px;
+    }
+    .story-filter{
+      border:1px solid #d8d8d2;
+      background:transparent;
+      color:#1b1b19;
+      border-radius:999px;
+      padding:10px 18px;
+      font:inherit;
+      cursor:default;
+    }
+    .story-filter.active{
+      background:#171716;
+      color:#fff;
+      border-color:#171716;
+    }
+
+    .featured-story{
+      display:grid;
+      grid-template-columns:1.35fr .8fr;
+      gap:0;
+      overflow:hidden;
+      border:1px solid #e0e0db;
+      border-radius:22px;
+      background:#fff;
+    }
+    .featured-story-media{
+      min-height:430px;
+      background:#eee;
+    }
+    .featured-story-media img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+    }
+    .featured-story-copy{
+      padding:48px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .editorial-meta{
+      font-size:12px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:#777771;
+    }
+    .featured-story-copy h2{
+      margin:14px 0 14px;
+    }
+    .featured-story-copy p{
+      margin:0 0 26px;
+      color:#4f4f4a;
+      font-size:17px;
+      line-height:1.6;
+    }
+
+    .story-section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:28px;
+    }
+    .story-section-head h2{
+      margin:0;
+    }
+    .story-section-head .small-link{
+      white-space:nowrap;
+    }
+
+    .editorial-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:30px 18px;
+    }
+    .editorial-card{
+      min-width:0;
+    }
+    .editorial-card-media{
+      aspect-ratio:1.28/1;
+      overflow:hidden;
+      border-radius:16px;
+      background:#eee;
+    }
+    .editorial-card-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .editorial-card .editorial-meta{
+      margin-top:14px;
+    }
+    .editorial-card h3{
+      font-size:22px;
+      line-height:1.1;
+      margin:9px 0 9px;
+      letter-spacing:-.025em;
+    }
+    .editorial-card p{
+      margin:0;
+      color:#575751;
+      line-height:1.5;
+    }
+    .editorial-card .small-link{
+      display:inline-block;
+      margin-top:14px;
+    }
+
+    .reader-section{
+      border-top:1px solid #dddcd6;
+      margin-top:74px;
+      padding-top:56px;
+    }
+    .reader-intro{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:30px;
+      margin-bottom:28px;
+    }
+    .reader-intro h2{
+      margin:0 0 8px;
+    }
+    .reader-intro p{
+      max-width:650px;
+      margin:0;
+      color:#55554f;
+    }
+    .reader-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .reader-card{
+      border:1px solid #dfdfda;
+      border-radius:18px;
+      padding:18px;
+      display:grid;
+      grid-template-columns:84px 1fr;
+      gap:18px;
+      align-items:center;
+      background:#fff;
+    }
+    .reader-card img{
+      width:84px;
+      height:84px;
+      object-fit:cover;
+      border-radius:14px;
+      display:block;
+    }
+    .reader-card blockquote{
+      margin:0 0 10px;
+      font-size:16px;
+      line-height:1.45;
+    }
+    .reader-card cite{
+      font-style:normal;
+      color:#66665f;
+      font-size:13px;
+    }
+
+    .closing-editorial{
+      margin-top:74px;
+    }
+    .closing-editorial .quiet-line{
+      margin:0;
+    }
+
+    @media(max-width:1000px){
+      .editorial-hero-grid,
+      .featured-story{
+        grid-template-columns:1fr;
+      }
+      .editorial-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .reader-grid{
+        grid-template-columns:1fr;
+      }
+      .featured-story-media,
+      .editorial-cover,
+      .editorial-cover img{
+        min-height:360px;
+      }
+    }
+
+    @media(max-width:620px){
+      .editorial-hero{
+        padding:62px 0 34px;
+      }
+      .editorial-grid{
+        grid-template-columns:1fr;
+      }
+      .featured-story-copy{
+        padding:30px 24px;
+      }
+      .featured-story-media,
+      .editorial-cover,
+      .editorial-cover img{
+        min-height:280px;
+      }
+      .reader-card{
+        grid-template-columns:68px 1fr;
+      }
+      .reader-card img{
+        width:68px;
+        height:68px;
+      }
+      .story-section-head,
+      .reader-intro{
+        display:block;
+      }
+      .story-section-head .small-link,
+      .reader-intro .btn{
+        display:inline-block;
+        margin-top:14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html">DIPLODOCUSS</a>
+      <button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+
+      <nav class="nav-links">
+        <a href="tentang.html">Tentang</a>
+        <a href="menu.html">Menu</a>
+        <a href="hadir.html" data-feature="hadir">Hadir</a>
+        <a href="cerita.html" aria-current="page">Cerita</a>
+        <a class="nav-cta" href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Pesan</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="editorial-hero container">
+      <div class="editorial-hero-grid">
+        <div>
+          <div class="kicker">Cerita</div>
+          <h1>Sedikit cerita dari sini.</h1>
+          <p>Tentang minuman, keseharian, orang-orang, dan hal-hal kecil yang terjadi di antaranya.</p>
+        </div>
+
+        <div class="editorial-cover">
+          <img src="assets/now-working.jpg" alt="Diplodocuss menemani waktu kerja">
+        </div>
+      </div>
+
+      <div class="story-filters" aria-label="Kategori cerita">
+        <span class="story-filter active">Semua</span>
+        <span class="story-filter">Diplo</span>
+        <span class="story-filter">Minuman</span>
+        <span class="story-filter">Orang</span>
+      </div>
+    </section>
+
+    <section class="section container">
+      <article class="featured-story">
+        <div class="featured-story-media">
+          <img src="assets/2018-lapangan-pemda.jpg" alt="Arsip Diplodocuss di Muntilan pada 2018">
+        </div>
+        <div class="featured-story-copy">
+          <div class="editorial-meta">Diplo Story · 6 menit baca</div>
+          <h2>Kenapa Diplodocuss mulai lagi?</h2>
+          <p>Delapan tahun ternyata cukup lama untuk membuat banyak hal berubah. Termasuk cara kami bikin dan menjual kopi.</p>
+          <a class="small-link" href="tentang.html">Baca cerita →</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="section container">
+      <div class="story-section-head">
+        <div>
+          <div class="kicker">Journal</div>
+          <h2>Cerita lainnya</h2>
+        </div>
+        <a class="small-link" href="#cerita-terbaru">Lihat semua cerita →</a>
+      </div>
+
+      <div class="editorial-grid" id="cerita-terbaru">
+        <article class="editorial-card">
+          <div class="editorial-card-media">
+            <img src="assets/2018-night-booth.jpg" alt="Booth Diplodocuss pada 2018 di malam hari">
+          </div>
+          <div class="editorial-meta">Diplo · 4 menit baca</div>
+          <h3>Kenapa akhirnya jualan dalam botol?</h3>
+          <p>Dari gerobak di lapangan, sampai ke kulkas kamu.</p>
+          <span class="small-link">Segera →</span>
+        </article>
+
+        <article class="editorial-card">
+          <div class="editorial-card-media">
+            <img src="assets/teh-bloom.jpeg" alt="Teh Bloom">
+          </div>
+          <div class="editorial-meta">Minuman · 3 menit baca</div>
+          <h3>Kenapa ada teh?</h3>
+          <p>Karena tidak semua orang setiap hari ingin minum kopi.</p>
+          <span class="small-link">Segera →</span>
+        </article>
+
+        <article class="editorial-card">
+          <div class="editorial-card-media">
+            <img src="assets/now-working.jpg" alt="Diplodocuss di meja kerja">
+          </div>
+          <div class="editorial-meta">Diplo · 5 menit baca</div>
+          <h3>Ternyata buka usaha lagi di umur 25 rasanya begini.</h3>
+          <p>Antara kerja, bikin minuman, dan belajar pelan-pelan lagi.</p>
+          <span class="small-link">Segera →</span>
+        </article>
+
+        <article class="editorial-card">
+          <div class="editorial-card-media">
+            <img src="assets/drive.jpg" alt="Perjalanan membawa Diplodocuss">
+          </div>
+          <div class="editorial-meta">Minuman · 4 menit baca</div>
+          <h3>V60 jangan tertinggal.</h3>
+          <p>Kalau diajak pergi jauh, biasanya ada saja yang dibawa sekalian.</p>
+          <span class="small-link">Segera →</span>
+        </article>
+
+        <article class="editorial-card">
+          <div class="editorial-card-media">
+            <img src="assets/door-friends.jpg" alt="Teman datang membawa Diplodocuss">
+          </div>
+          <div class="editorial-meta">Orang · 3 menit baca</div>
+          <h3>Katanya cuma sebentar.</h3>
+          <p>Teman datang, minuman ikut datang.</p>
+          <span class="small-link">Segera →</span>
+        </article>
+
+        <article class="editorial-card">
+          <div class="editorial-card-media">
+            <img src="assets/2018-booth-worker.jpg" alt="Founder Diplodocuss di booth">
+          </div>
+          <div class="editorial-meta">Diplo · 2 menit baca</div>
+          <h3>Lima botol pertama.</h3>
+          <p>Masih banyak yang harus dipelajari.</p>
+          <span class="small-link">Segera →</span>
+        </article>
+
+        <article class="editorial-card">
+          <div class="editorial-card-media">
+            <img src="assets/now-friends.jpg" alt="Teman-teman bersama Diplodocuss">
+          </div>
+          <div class="editorial-meta">Orang · 2 menit baca</div>
+          <h3>Awalnya cuma mau satu.</h3>
+          <p>Cerita dari salah satu yang sudah mencoba Diplo.</p>
+          <span class="small-link">Segera →</span>
+        </article>
+
+        <article class="editorial-card">
+          <div class="editorial-card-media">
+            <img src="assets/2018-night-booth.jpg" alt="Diplodocuss pada malam hari">
+          </div>
+          <div class="editorial-meta">Diplo · 3 menit baca</div>
+          <h3>Pulang kerja, masih harus packing order.</h3>
+          <p>Nggak selalu mudah, tapi tetap menyenangkan.</p>
+          <span class="small-link">Segera →</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container reader-section">
+      <div class="reader-intro">
+        <div>
+          <div class="kicker">Cerita dari kamu</div>
+          <h2>Kalian juga boleh cerita.</h2>
+          <p>Kirim foto, cerita, atau momen kecil bersama Diplodocuss. Nanti kami simpan di sini.</p>
+        </div>
+        <a class="btn btn-dark" href="https://wa.me/6281329024085?text=Halo%20Diplo%2C%20aku%20mau%20kirim%20cerita." target="_blank" rel="noopener noreferrer">Kirim cerita kamu →</a>
+      </div>
+
+      <div class="reader-grid">
+        <article class="reader-card">
+          <img src="assets/kopi-aren.png" alt="Kopi Aren">
+          <div>
+            <blockquote>“Rasanya pas banget. Terlalu manis nggak, tapi tetap creamy.”</blockquote>
+            <cite>— Cerita customer</cite>
+          </div>
+        </article>
+
+        <article class="reader-card">
+          <img src="assets/teh-bloom.jpeg" alt="Teh Bloom">
+          <div>
+            <blockquote>“Temen ngopi setiap presentasi penting.”</blockquote>
+            <cite>— Cerita customer</cite>
+          </div>
+        </article>
+
+        <article class="reader-card">
+          <img src="assets/now-friends.jpg" alt="Teman-teman minum bersama">
+          <div>
+            <blockquote>“Tehnya enak, segar, dan gampang diminum.”</blockquote>
+            <cite>— Cerita customer</cite>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container closing-editorial">
+      <p class="quiet-line">Sampai ketemu di cerita berikutnya.</p>
+    </section>
+
+    <section class="section container">
+      <div class="cta-panel">
+        <img src="assets/2018-night-booth.jpg" alt="Diplodocuss di malam hari pada masa awal">
+        <div class="content">
+          <div class="kicker">Teman jeda</div>
+          <h2>Minum dulu.</h2>
+          <p>Habis itu lanjut lagi.</p>
+          <div class="actions">
+            <a class="btn btn-light" href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Pesan di Grab →</a>
+            <a class="btn btn-outline-light" href="https://wa.me/6281329024085?text=Halo%20Diplo%2C%20mau%20pesan." target="_blank" rel="noopener noreferrer">Pesan via WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">DIPLODOCUSS</div>
+          <div class="footer-note">Teman jeda. Kopi, teh, dan hal-hal kecil yang menemani hari.</div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kenal</h4>
+          <a href="tentang.html">Tentang</a>
+          <a href="menu.html">Menu</a>
+          <a href="hadir.html" data-feature="hadir">Hadir</a>
+          <a href="cerita.html">Cerita</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Hubungi</h4>
+          <a href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Grab</a>
+          <a href="https://wa.me/6281329024085?text=Halo%20Diplo%2C%20mau%20pesan." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://www.instagram.com/diplodocuss.id/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span data-year></span> Diplodocuss</span>
+        <span>Real life, well framed.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
