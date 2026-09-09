@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Kirim cerita jeda kamu ke Diplodocuss.">
+  <title>Kirim Cerita — Diplodocuss</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    [hidden]{display:none !important}
+
+    .submit-page{
+      padding:86px 0 100px;
+    }
+    .submit-layout{
+      display:grid;
+      grid-template-columns:.72fr 1.28fr;
+      gap:70px;
+      align-items:start;
+    }
+    .submit-intro{
+      position:sticky;
+      top:110px;
+    }
+    .submit-intro h1{
+      max-width:580px;
+      margin:14px 0 18px;
+    }
+    .submit-intro > p{
+      max-width:500px;
+      margin:0;
+      color:#55554f;
+      font-size:18px;
+      line-height:1.58;
+    }
+    .submit-note{
+      margin-top:42px;
+      max-width:370px;
+      color:#6a6a63;
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .story-form{
+      border-top:1px solid #dad9d3;
+      padding-top:6px;
+    }
+    .field{
+      padding:24px 0;
+      border-bottom:1px solid #dad9d3;
+    }
+    .field label{
+      display:block;
+      font-weight:600;
+      margin-bottom:9px;
+    }
+    .field-help{
+      margin:0 0 12px;
+      color:#777770;
+      font-size:14px;
+      line-height:1.45;
+    }
+    .field input[type="text"],
+    .field textarea{
+      width:100%;
+      border:0;
+      border-bottom:1px solid #aaa9a2;
+      background:transparent;
+      border-radius:0;
+      padding:10px 0 11px;
+      font:inherit;
+      color:#171716;
+      outline:none;
+    }
+    .field input[type="text"]:focus,
+    .field textarea:focus{
+      border-bottom-color:#171716;
+    }
+    .field textarea{
+      min-height:220px;
+      resize:vertical;
+      line-height:1.6;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder{
+      color:#a0a09a;
+    }
+
+    .upload-box{
+      border:1px dashed #aaa9a2;
+      border-radius:16px;
+      padding:20px;
+      background:#fafaf7;
+    }
+    .upload-label{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      cursor:pointer;
+    }
+    .upload-title{
+      font-weight:600;
+    }
+    .upload-subtitle{
+      color:#777770;
+      font-size:13px;
+      margin-top:4px;
+    }
+    .upload-button{
+      flex:none;
+      padding:11px 16px;
+      border-radius:999px;
+      background:#171716;
+      color:#fff;
+      font-size:14px;
+    }
+    .upload-box input[type="file"]{
+      position:absolute;
+      width:1px;
+      height:1px;
+      opacity:0;
+      pointer-events:none;
+    }
+    .preview{
+      display:none;
+      margin-top:16px;
+      overflow:hidden;
+      border-radius:14px;
+      background:#ecece7;
+    }
+    .preview.active{
+      display:block;
+    }
+    .preview img{
+      display:block;
+      width:100%;
+      max-height:440px;
+      object-fit:cover;
+    }
+    .preview-meta{
+      padding:10px 12px;
+      color:#66665f;
+      font-size:12px;
+      background:#f4f4ef;
+    }
+
+    .consent{
+      padding:25px 0 0;
+      display:flex;
+      align-items:flex-start;
+      gap:11px;
+      color:#55554f;
+      font-size:14px;
+      line-height:1.5;
+    }
+    .consent input{
+      margin-top:3px;
+      accent-color:#171716;
+    }
+
+    .form-actions{
+      margin-top:28px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    .submit-status{
+      display:none;
+      margin-top:22px;
+      padding:14px 16px;
+      border-radius:12px;
+      font-size:14px;
+      line-height:1.5;
+    }
+    .submit-status.show{
+      display:block;
+    }
+    .submit-status.success{
+      background:#eef5ed;
+      color:#2e542d;
+    }
+    .submit-status.error{
+      background:#f7ecea;
+      color:#6b2d26;
+    }
+    .submit-status.info{
+      background:#f0f0eb;
+      color:#55554f;
+    }
+
+    .fallback-note{
+      margin-top:12px;
+      font-size:13px;
+      color:#777770;
+    }
+
+    /* Hidden honeypot */
+    .hp{
+      position:absolute !important;
+      left:-10000px !important;
+      width:1px !important;
+      height:1px !important;
+      opacity:0 !important;
+      pointer-events:none !important;
+    }
+
+    @media(max-width:900px){
+      .submit-layout{
+        grid-template-columns:1fr;
+        gap:42px;
+      }
+      .submit-intro{
+        position:static;
+      }
+    }
+
+    @media(max-width:620px){
+      .submit-page{
+        padding:62px 0 76px;
+      }
+      .upload-label{
+        display:block;
+      }
+      .upload-button{
+        display:inline-block;
+        margin-top:14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html">DIPLODOCUSS</a>
+      <button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+
+      <nav class="nav-links">
+        <a href="tentang.html">Tentang</a>
+        <a href="menu.html">Menu</a>
+        <a href="hadir.html" data-feature="hadir">Hadir</a>
+        <a href="cerita.html">Cerita</a>
+        <a class="nav-cta" href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Pesan</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="submit-page">
+      <div class="container submit-layout">
+
+        <div class="submit-intro">
+          <div class="kicker">Cerita dari kamu</div>
+          <h1>Jeda menurut kamu seperti apa?</h1>
+          <p>Kirim foto, cerita, atau hal kecil dari jedamu. Nggak harus sempurna. Yang penting, memang terjadi.</p>
+
+          <div class="submit-note">
+            Cerita yang masuk akan kami baca dan pilih dulu sebelum ditampilkan di Diplodocuss.
+          </div>
+        </div>
+
+        <form class="story-form" id="storyForm">
+
+          <!-- Anti-spam honeypot -->
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+
+          <div class="field">
+            <label for="authorName">Nama</label>
+            <p class="field-help">Nama yang ingin ditampilkan bersama ceritamu.</p>
+            <input id="authorName" name="authorName" type="text" maxlength="80" autocomplete="name" placeholder="Nama kamu" required>
+          </div>
+
+          <div class="field">
+            <label for="instagram">Instagram <span style="font-weight:400;color:#888">(opsional)</span></label>
+            <p class="field-help">Boleh isi username kalau kamu ingin kami mencantumkannya.</p>
+            <input id="instagram" name="instagram" type="text" maxlength="80" autocomplete="off" placeholder="@username">
+          </div>
+
+          <div class="field">
+            <label for="title">Judul cerita</label>
+            <p class="field-help">Nggak perlu terlalu serius. Tulis seperti kamu sedang memberi judul pada cerita kecil.</p>
+            <input id="title" name="title" type="text" maxlength="120" placeholder="Misalnya: Jeda setelah meeting." required>
+          </div>
+
+          <div class="field">
+            <label for="storyText">Ceritamu</label>
+            <p class="field-help">Ceritakan momen, kebiasaan, tempat, atau hal kecil yang biasanya jadi jedamu.</p>
+            <textarea id="storyText" name="storyText" maxlength="2500" placeholder="Hari ini..." required></textarea>
+            <div class="field-help" style="margin:8px 0 0;text-align:right"><span id="charCount">0</span>/2500</div>
+          </div>
+
+          <div class="field">
+            <label>Foto</label>
+            <p class="field-help">Satu foto yang menurutmu paling mewakili ceritanya.</p>
+
+            <div class="upload-box">
+              <label class="upload-label" for="photo">
+                <div>
+                  <div class="upload-title">Pilih foto</div>
+                  <div class="upload-subtitle">JPG, PNG, atau WebP · maksimal 10 MB</div>
+                </div>
+                <span class="upload-button">Pilih file</span>
+              </label>
+
+              <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp" required>
+
+              <div class="preview" id="preview">
+                <img id="previewImage" alt="Preview foto cerita">
+                <div class="preview-meta" id="previewMeta"></div>
+              </div>
+            </div>
+          </div>
+
+          <label class="consent">
+            <input id="consent" type="checkbox" required>
+            <span>Saya mengizinkan Diplodocuss untuk mempertimbangkan, menyunting seperlunya, dan menampilkan cerita/foto ini di website atau kanal brand.</span>
+          </label>
+
+          <div class="form-actions">
+            <button class="btn btn-dark" type="submit" id="submitButton">Kirim cerita →</button>
+          </div>
+
+          <div class="submit-status" id="submitStatus" role="status" aria-live="polite"></div>
+
+          <div class="fallback-note">
+            Lebih nyaman lewat DM? <a href="https://www.instagram.com/diplodocuss.id/" target="_blank" rel="noopener noreferrer">Ceritain juga bisa lewat Instagram.</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">DIPLODOCUSS</div>
+          <div class="footer-note">Teman jeda. Kopi, teh, dan hal-hal kecil yang menemani hari.</div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kenal</h4>
+          <a href="tentang.html">Tentang</a>
+          <a href="menu.html">Menu</a>
+          <a href="hadir.html" data-feature="hadir">Hadir</a>
+          <a href="cerita.html">Cerita</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Hubungi</h4>
+          <a href="https://r.grab.com/o/NV3MZvei" target="_blank" rel="noopener noreferrer">Grab</a>
+          <a href="https://wa.me/6281329024085?text=Halo%20Diplo%2C%20mau%20pesan." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://www.instagram.com/diplodocuss.id/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span data-year></span> Diplodocuss</span>
+        <span>Real life, well framed.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Supabase JS v2 via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    /*
+      SUPABASE CONFIG
+      Ganti dua nilai ini dengan:
+      - Project URL
+      - Publishable key
+      dari Supabase Dashboard → Connect / API.
+
+      JANGAN masukkan service_role key ke sini.
+    */
+const SUPABASE_URL = "https://wnyhxogclzivstacasqi.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_uugjdsknBFrHcZq0xdA33A_c9miRmfJ";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const form = document.getElementById("storyForm");
+    const submitButton = document.getElementById("submitButton");
+    const statusBox = document.getElementById("submitStatus");
+    const photoInput = document.getElementById("photo");
+    const preview = document.getElementById("preview");
+    const previewImage = document.getElementById("previewImage");
+    const previewMeta = document.getElementById("previewMeta");
+    const storyText = document.getElementById("storyText");
+    const charCount = document.getElementById("charCount");
+
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+    const ALLOWED_TYPES = new Set([
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ]);
+
+    function setStatus(message, type = "info"){
+      statusBox.textContent = message;
+      statusBox.className = `submit-status show ${type}`;
+    }
+
+    function slugify(value){
+      return value
+        .toLowerCase()
+        .normalize("NFKD")
+        .replace(/[^\w\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .slice(0, 70);
+    }
+
+    function formatBytes(bytes){
+      return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+    }
+
+    storyText.addEventListener("input", () => {
+      charCount.textContent = storyText.value.length;
+    });
+
+    photoInput.addEventListener("change", () => {
+      const file = photoInput.files?.[0];
+
+      if(!file){
+        preview.classList.remove("active");
+        return;
+      }
+
+      if(!ALLOWED_TYPES.has(file.type)){
+        photoInput.value = "";
+        preview.classList.remove("active");
+        setStatus("Format foto harus JPG, PNG, atau WebP.", "error");
+        return;
+      }
+
+      if(file.size > MAX_FILE_SIZE){
+        photoInput.value = "";
+        preview.classList.remove("active");
+        setStatus("Foto terlalu besar. Maksimal 10 MB.", "error");
+        return;
+      }
+
+      const objectUrl = URL.createObjectURL(file);
+      previewImage.src = objectUrl;
+      previewMeta.textContent = `${file.name} · ${formatBytes(file.size)}`;
+      preview.classList.add("active");
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const honeypot = form.elements.website.value.trim();
+      if(honeypot){
+        // Silently reject likely bots.
+        return;
+      }
+
+      const authorName = form.elements.authorName.value.trim();
+      const instagram = form.elements.instagram.value.trim();
+      const title = form.elements.title.value.trim();
+      const storyTextValue = storyText.value.trim();
+      const photo = photoInput.files?.[0];
+
+      if(!authorName || !title || !storyTextValue || !photo){
+        setStatus("Lengkapi nama, judul, cerita, dan foto dulu.", "error");
+        return;
+      }
+
+      if(!document.getElementById("consent").checked){
+        setStatus("Centang izin penggunaan cerita/foto dulu.", "error");
+        return;
+      }
+
+      if(!ALLOWED_TYPES.has(photo.type)){
+        setStatus("Format foto harus JPG, PNG, atau WebP.", "error");
+        return;
+      }
+
+      if(photo.size > MAX_FILE_SIZE){
+        setStatus("Foto terlalu besar. Maksimal 10 MB.", "error");
+        return;
+      }
+
+      if(
+        SUPABASE_URL.includes("PASTE_YOUR") ||
+        SUPABASE_PUBLISHABLE_KEY.includes("PASTE_YOUR")
+      ){
+        setStatus("Form belum terhubung ke Supabase. Isi Project URL dan Publishable Key di bagian konfigurasi file ini.", "error");
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Mengirim…";
+      setStatus("Sebentar. Ceritamu sedang dikirim.", "info");
+
+      const submissionId = crypto.randomUUID();
+      const extension = photo.type === "image/png"
+        ? "png"
+        : photo.type === "image/webp"
+          ? "webp"
+          : "jpg";
+
+      const safeTitle = slugify(title) || "cerita";
+      const slug = `${safeTitle}-${submissionId.slice(0, 8)}`;
+      const imagePath = `submissions/${submissionId}.${extension}`;
+
+      try{
+        /*
+          Insert DB first so the moderation queue always has a record,
+          even if the photo upload needs to be retried manually.
+        */
+        const { error: insertError } = await supabaseClient
+          .from("stories")
+          .insert({
+            title,
+            author_name: authorName,
+            instagram: instagram || null,
+            story_text: storyTextValue,
+            image_path: imagePath,
+            slug,
+            status: "pending"
+          });
+
+        if(insertError){
+          throw insertError;
+        }
+
+        const { error: uploadError } = await supabaseClient
+          .storage
+          .from("story-images")
+          .upload(imagePath, photo, {
+            cacheControl: "3600",
+            contentType: photo.type,
+            upsert: false
+          });
+
+        if(uploadError){
+          setStatus(
+            "Cerita sudah masuk antrean, tapi fotonya gagal diunggah. Simpan nama file ini untuk pengecekan: " + imagePath,
+            "error"
+          );
+          submitButton.disabled = false;
+          submitButton.textContent = "Kirim cerita →";
+          return;
+        }
+
+        setStatus(
+          "Makasih. Ceritamu sudah masuk. Kami baca dan pilih dulu sebelum ditampilkan.",
+          "success"
+        );
+
+        form.reset();
+        charCount.textContent = "0";
+        preview.classList.remove("active");
+        previewImage.removeAttribute("src");
+        previewMeta.textContent = "";
+
+      }catch(error){
+        console.error(error);
+        setStatus(
+          "Belum berhasil mengirim. Coba lagi beberapa saat atau kirim lewat DM Instagram.",
+          "error"
+        );
+      }finally{
+        submitButton.disabled = false;
+        submitButton.textContent = "Kirim cerita →";
+      }
+    });
+  </script>
+</body>
+</html>
