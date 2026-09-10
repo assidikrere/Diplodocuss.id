@@ -347,7 +347,7 @@
             <div>
               <div class="kicker">Dashboard</div>
               <h1>Cerita Masuk</h1>
-              <p>Review cerita yang masuk sebelum ditayangkan.</p>
+              <p>Review cerita yang masuk sebelum ditayangkan. Cerita tayang bisa di-take down kapan saja.</p>
             </div>
 
             <div class="admin-topbar-actions">
@@ -409,7 +409,8 @@
 
           <div class="preview-actions">
             <button class="action-btn primary" type="button" id="modalApprove">Approve & Tayang</button>
-            <button class="action-btn danger" type="button" id="modalReject">Tolak Cerita</button>
+            <button class="action-btn danger" type="button" id="modalReject">Tolak / Take Down</button>
+            <button class="action-btn danger" type="button" id="modalDelete">Hapus Permanen</button>
           </div>
         </div>
       </div>
@@ -421,7 +422,7 @@
 
   <script>
     const SUPABASE_URL = "https://wnyhxogclzivstacasqi.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_uugjdsknBFrHcZq0xdA33A_c9miRmfJ";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_uugjdsknBFrHcZ0xdA33A_c9miRmfJ";
 
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
@@ -443,6 +444,7 @@
     const closeModal = document.getElementById("closeModal");
     const modalApprove = document.getElementById("modalApprove");
     const modalReject = document.getElementById("modalReject");
+    const modalDelete = document.getElementById("modalDelete");
 
     let activeStatus = "pending";
     let stories = [];
@@ -516,6 +518,10 @@
             ` : ""}
             ${activeStatus === "approved" ? `
               <a class="action-btn" href="/cerita/${encodeURIComponent(story.slug)}.html" target="_blank" rel="noopener noreferrer">Lihat di Website ↗</a>
+              <button class="action-btn danger" type="button" data-action="take-down" data-id="${story.id}">Take Down</button>
+            ` : ""}
+            ${activeStatus === "rejected" ? `
+              <button class="action-btn danger" type="button" data-action="delete" data-id="${story.id}">Hapus Permanen</button>
             ` : ""}
           </div>
         `;
@@ -597,7 +603,16 @@
       image.alt = story.title;
 
       modalApprove.hidden = story.status !== "pending";
-      modalReject.hidden = story.status !== "pending";
+      modalReject.hidden = false;
+      modalDelete.hidden = false;
+
+      if(story.status === "pending"){
+        modalReject.textContent = "Tolak Cerita";
+      }else if(story.status === "approved"){
+        modalReject.textContent = "Take Down";
+      }else{
+        modalReject.hidden = true;
+      }
 
       previewModal.classList.add("open");
       previewModal.setAttribute("aria-hidden","false");
@@ -607,6 +622,59 @@
       previewModal.classList.remove("open");
       previewModal.setAttribute("aria-hidden","true");
       activeStory = null;
+    }
+
+    async function deleteStoryPermanently(story){
+      if(!story){
+        return false;
+      }
+
+      const confirmed = window.confirm(
+        `Hapus permanen "${story.title}"?\n\nIni akan menghapus artikel dari database dan foto submission dari Storage. Tindakan ini tidak bisa dibatalkan.`
+      );
+
+      if(!confirmed){
+        return false;
+      }
+
+      setStatus(adminStatus, "Menghapus cerita dan fotonya…", "info");
+
+      if(story.image_path){
+        const { error: storageError } = await supabaseClient
+          .storage
+          .from("story-images")
+          .remove([story.image_path]);
+
+        if(storageError){
+          console.error("Gagal menghapus foto:", storageError);
+          setStatus(
+            adminStatus,
+            "Foto tidak bisa dihapus, jadi cerita tidak ikut dihapus.",
+            "error"
+          );
+          return false;
+        }
+      }
+
+      const { error: dbError } = await supabaseClient
+        .from("stories")
+        .delete()
+        .eq("id", story.id);
+
+      if(dbError){
+        console.error("Gagal menghapus story:", dbError);
+        setStatus(
+          adminStatus,
+          "Foto sudah terhapus, tetapi data cerita gagal dihapus. Cek Supabase.",
+          "error"
+        );
+        return false;
+      }
+
+      setStatus(adminStatus, "Cerita berhasil dihapus permanen.", "success");
+      closePreview();
+      await loadStories();
+      return true;
     }
 
     async function updateStoryStatus(id, nextStatus){
@@ -725,6 +793,22 @@
 
       if(action === "reject"){
         await updateStoryStatus(id, "rejected");
+        return;
+      }
+
+      if(action === "take-down"){
+        const confirmed = window.confirm(
+          `Take down "${story.title}" dari website?\n\nCerita akan dipindahkan ke Ditolak dan tidak lagi tampil publik.`
+        );
+
+        if(confirmed){
+          await updateStoryStatus(id, "rejected");
+        }
+        return;
+      }
+
+      if(action === "delete"){
+        await deleteStoryPermanently(story);
       }
     });
 
@@ -735,8 +819,26 @@
     });
 
     modalReject.addEventListener("click", async () => {
-      if(activeStory){
+      if(!activeStory){
+        return;
+      }
+
+      const actionLabel = activeStory.status === "approved"
+        ? "take down"
+        : "menolak";
+
+      const confirmed = window.confirm(
+        `Yakin mau ${actionLabel} "${activeStory.title}"?`
+      );
+
+      if(confirmed){
         await updateStoryStatus(activeStory.id, "rejected");
+      }
+    });
+
+    modalDelete.addEventListener("click", async () => {
+      if(activeStory){
+        await deleteStoryPermanently(activeStory);
       }
     });
 
