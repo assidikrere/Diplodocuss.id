@@ -306,7 +306,14 @@
     );
 
     const params = new URLSearchParams(window.location.search);
-    const requestedSlug = params.get("slug");
+
+    // Support both:
+    // /artikel.html?slug=testing-679cd1fd
+    // and the public article URL:
+    // /cerita/testing-679cd1fd.html
+    const slugFromQuery = params.get("slug");
+    const pathMatch = window.location.pathname.match(/^\/cerita\/([^/]+)\.html\/?$/);
+    const requestedSlug = slugFromQuery || (pathMatch ? decodeURIComponent(pathMatch[1]) : null);
 
     const loading = document.getElementById("articleLoading");
     const errorBox = document.getElementById("articleError");
