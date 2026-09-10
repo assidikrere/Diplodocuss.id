@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/cerita/:slug.html",
+      "destination": "/artikel.html?slug=:slug"
+    }
+  ]
+}
